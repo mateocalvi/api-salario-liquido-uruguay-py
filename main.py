@@ -40,24 +40,82 @@ class SalarioRequest(BaseModel):
 
 
 class DetalleCalculos(BaseModel):
-    salario_nominal: float
-    aporte_jubilatorio: float
-    aporte_fonasa: float
-    aporte_frl: float
-    total_aportes_bps: float
-    base_irpf: float
-    irpf_bruto: float
-    deducciones_irpf: float
-    irpf_neto: float
-    salario_liquido: float
-    tasa_fonasa_aplicada: float
-    detalle_irpf: list
+    salario_nominal: float = Field(
+        ...,
+        description="Salario bruto mensual en pesos uruguayos antes de cualquier descuento",
+    )
+
+    aporte_jubilatorio: float = Field(
+        ...,
+        description="Aporte jubilatorio (15% del salario nominal). Este dinero va al sistema de jubilaciones de BPS para financiar tu futura jubilación",
+    )
+
+    aporte_fonasa: float = Field(
+        ...,
+        description="Aporte al Fondo Nacional de Salud (FONASA) que financia el sistema de salud público. La tasa varía entre 3% y 4.5% según tu salario y cargas familiares",
+    )
+
+    aporte_frl: float = Field(
+        ...,
+        description="Aporte al Fondo de Reconversión Laboral (0.1% del salario). Este fondo financia programas de capacitación y reconversión para trabajadores desempleados",
+    )
+
+    total_aportes_bps: float = Field(
+        ...,
+        description="Suma total de todos los aportes a BPS (jubilatorio + FONASA + FRL). Estos aportes son obligatorios y se descuentan automáticamente de tu salario",
+    )
+
+    base_irpf: float = Field(
+        ...,
+        description="Base imponible para el cálculo del IRPF. Se calcula como: salario nominal - aportes BPS. Si tu salario supera 10 BPC, se aplica un incremento del 6% (ficto) para el cálculo del impuesto",
+    )
+
+    irpf_bruto: float = Field(
+        ...,
+        description="IRPF (Impuesto a la Renta de Personas Físicas) calculado antes de aplicar deducciones. Se calcula aplicando tasas progresivas por franjas: cada franja de ingresos tiene una tasa diferente, y solo se aplica esa tasa a la porción del salario que cae en esa franja",
+    )
+
+    deducciones_irpf: float = Field(
+        ...,
+        description="Total de deducciones aplicables al IRPF. Incluye deducciones por hijos a cargo (~0.5 BPC por hijo), cónyuge a cargo (~0.5 BPC), y otras deducciones adicionales declaradas (gastos médicos, educativos, etc.)",
+    )
+
+    irpf_neto: float = Field(
+        ...,
+        description="IRPF final a pagar después de aplicar todas las deducciones (IRPF bruto - deducciones). Este es el impuesto que efectivamente se descuenta de tu salario.",
+    )
+
+    salario_liquido: float = Field(
+        ...,
+        description="Salario que efectivamente cobras en tu cuenta bancaria.",
+    )
+
+    tasa_fonasa_aplicada: float = Field(
+        ...,
+        description="Tasa porcentual de FONASA que se aplicó en el cálculo (expresada como decimal, ej: 0.045 = 4.5%). Esta tasa depende de tu salario y si tienes hijos o cónyuge a cargo. Se usa para calcular el aporte al sistema de salud",
+    )
+
+    detalle_irpf: list = Field(
+        ...,
+        description="Desglose detallado del cálculo de IRPF por cada franja. Muestra exactamente cómo se aplicó cada tasa progresiva, qué monto de tu salario cayó en cada franja, y cuánto impuesto se calculó para cada una.",
+    )
 
 
 class SalarioResponse(BaseModel):
-    calculos: DetalleCalculos
-    porcentaje_descuento_total: float
-    bpc_usado: float
+    calculos: DetalleCalculos = Field(
+        ...,
+        description="Objeto con todos los detalles numéricos del cálculo del salario líquido, incluyendo cada aporte, impuesto y deducción aplicada",
+    )
+
+    porcentaje_descuento_total: float = Field(
+        ...,
+        description="Porcentaje total descontado del salario nominal (expresado como número, ej: 19.6 = 19.6%). Se calcula como: ((salario nominal - salario líquido) / salario nominal) × 100. Te indica qué porción de tu salario bruto se va en aportes e impuestos",
+    )
+
+    bpc_usado: float = Field(
+        ...,
+        description="Valor de la Base de Prestaciones y Contribuciones (BPC) utilizado en los cálculos, expresado en pesos uruguayos. La BPC es una unidad de medida que se actualiza anualmente y sirve como referencia para calcular las franjas del IRPF, aportes mínimos, y deducciones. Para 2024 vale $6,177",
+    )
 
 
 def calcular_tasa_fonasa(
