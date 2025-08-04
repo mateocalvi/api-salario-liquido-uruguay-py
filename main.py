@@ -47,12 +47,12 @@ class DetalleCalculos(BaseModel):
 
     aporte_jubilatorio: float = Field(
         ...,
-        description="Aporte jubilatorio (15% del salario nominal). Este dinero va al sistema de jubilaciones de BPS para financiar tu futura jubilación",
+        description="Aporte jubilatorio (15% del salario nominal). Este dinero va al sistema de jubilaciones de BPS para financiar la futura jubilación",
     )
 
     aporte_fonasa: float = Field(
         ...,
-        description="Aporte al Fondo Nacional de Salud (FONASA) que financia el sistema de salud público. La tasa varía entre 3% y 4.5% según tu salario y cargas familiares",
+        description="Aporte al Fondo Nacional de Salud (FONASA) que financia el sistema de salud público. La tasa varía entre 3% y 4.5% según el salario y cargas familiares",
     )
 
     aporte_frl: float = Field(
@@ -62,12 +62,12 @@ class DetalleCalculos(BaseModel):
 
     total_aportes_bps: float = Field(
         ...,
-        description="Suma total de todos los aportes a BPS (jubilatorio + FONASA + FRL). Estos aportes son obligatorios y se descuentan automáticamente de tu salario",
+        description="Suma total de todos los aportes a BPS (jubilatorio + FONASA + FRL). Estos aportes son obligatorios y se descuentan automáticamente del salario",
     )
 
     base_irpf: float = Field(
         ...,
-        description="Base imponible para el cálculo del IRPF. Se calcula como: salario nominal - aportes BPS. Si tu salario supera 10 BPC, se aplica un incremento del 6% (ficto) para el cálculo del impuesto",
+        description="Base imponible para el cálculo del IRPF. Se calcula como: salario nominal - aportes BPS. Si el salario supera 10 BPC, se aplica un incremento del 6% (ficto) para el cálculo del impuesto",
     )
 
     irpf_bruto: float = Field(
@@ -82,22 +82,22 @@ class DetalleCalculos(BaseModel):
 
     irpf_neto: float = Field(
         ...,
-        description="IRPF final a pagar después de aplicar todas las deducciones (IRPF bruto - deducciones). Este es el impuesto que efectivamente se descuenta de tu salario.",
+        description="IRPF final a pagar después de aplicar todas las deducciones (IRPF bruto - deducciones). Este es el impuesto que efectivamente se descuenta del salario.",
     )
 
     salario_liquido: float = Field(
         ...,
-        description="Salario que efectivamente cobras en tu cuenta bancaria.",
+        description="Salario que efectivamente se abona en la cuenta bancaria.",
     )
 
     tasa_fonasa_aplicada: float = Field(
         ...,
-        description="Tasa porcentual de FONASA que se aplicó en el cálculo (expresada como decimal, ej: 0.045 = 4.5%). Esta tasa depende de tu salario y si tienes hijos o cónyuge a cargo. Se usa para calcular el aporte al sistema de salud",
+        description="Tasa porcentual de FONASA que se aplicó en el cálculo (expresada como decimal, ej: 0.045 = 4.5%). Esta tasa depende del salario y si tienes hijos o cónyuge a cargo. Se usa para calcular el aporte al sistema de salud",
     )
 
     detalle_irpf: list = Field(
         ...,
-        description="Desglose detallado del cálculo de IRPF por cada franja. Muestra exactamente cómo se aplicó cada tasa progresiva, qué monto de tu salario cayó en cada franja, y cuánto impuesto se calculó para cada una.",
+        description="Desglose detallado del cálculo de IRPF por cada franja. Muestra exactamente cómo se aplicó cada tasa progresiva, qué monto del salario cayó en cada franja, y cuánto impuesto se calculó para cada una.",
     )
 
 
@@ -109,12 +109,12 @@ class SalarioResponse(BaseModel):
 
     porcentaje_descuento_total: float = Field(
         ...,
-        description="Porcentaje total descontado del salario nominal (expresado como número, ej: 19.6 = 19.6%). Se calcula como: ((salario nominal - salario líquido) / salario nominal) × 100. Te indica qué porción de tu salario bruto se va en aportes e impuestos",
+        description="Porcentaje total descontado del salario nominal (expresado como número, ej: 19.6 = 19.6%). Se calcula como: ((salario nominal - salario líquido) / salario nominal) × 100. Te indica qué porción del salario bruto se va en aportes e impuestos",
     )
 
     bpc_usado: float = Field(
         ...,
-        description="Valor de la Base de Prestaciones y Contribuciones (BPC) utilizado en los cálculos, expresado en pesos uruguayos. La BPC es una unidad de medida que se actualiza anualmente y sirve como referencia para calcular las franjas del IRPF, aportes mínimos, y deducciones. Para 2024 vale $6,177",
+        description="Valor de la Base de Prestaciones y Contribuciones (BPC) utilizado en los cálculos, expresado en pesos uruguayos. La BPC es una unidad de medida que se actualiza anualmente y sirve como referencia para calcular las franjas del IRPF, aportes mínimos, y deducciones.",
     )
 
 
