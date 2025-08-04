@@ -211,69 +211,6 @@ Endpoint de health check para monitoreo.
 | `porcentaje_descuento_total` | % total descontado del salario bruto                          |
 | `bpc_usado`                  | Valor BPC usado en cálculos (2025: $6,576)                    |
 
-## 💡 Conceptos Importantes
-
-### 🏛️ Aportes BPS (Obligatorios)
-
-#### 1. Aporte Jubilatorio (15%)
-- Tu "ahorro forzoso" para la jubilación
-- Va a tu cuenta individual en BPS
-- **No se pierde** - es tu dinero para el futuro
-
-#### 2. FONASA (3% - 4.5%)
-- Financia el sistema de salud público
-- Tasa variable según salario y cargas familiares:
-  - **< 2.5 BPC con familia:** 3%
-  - **≥ 2.5 BPC:** 4.5%
-
-#### 3. FRL (0.1%)
-- Fondo de Reconversión Laboral
-- Financia programas de capacitación para desempleados
-
-### 📊 IRPF - Sistema Progresivo (¡Importante!)
-
-**❌ Error común:** "Si gano $100,000 y caigo en la franja del 24%, pago 24% sobre todo mi salario"
-
-**✅ Realidad:** El IRPF es progresivo - cada franja tiene su tasa:
-
-| Desde    | Hasta   | Tasa | En Pesos (2025)     |
-| -------- | ------- | ---- | ------------------- |
-| 0 BPC    | 7 BPC   | 0%   | $0 - $46,032        |
-| 7 BPC    | 10 BPC  | 10%  | $46,032 - $65,760   |
-| 10 BPC   | 15 BPC  | 15%  | $65,760 - $98,640   |
-| 15 BPC   | 30 BPC  | 24%  | $98,640 - $197,280  |
-| 30 BPC   | 50 BPC  | 25%  | $197,280 - $328,800 |
-| 50 BPC   | 75 BPC  | 27%  | $328,800 - $493,200 |
-| 75 BPC   | 115 BPC | 31%  | $493,200 - $756,240 |
-| 115+ BPC | ∞       | 36%  | $756,240+           |
-
-**Ejemplo:** Con $100,000 de salario (2025):
-- 0% sobre primeros $46,032 = $0
-- 10% sobre siguientes $19,728 = $1,973
-- 15% sobre los $34,240 restantes = $5,136
-- **Total IRPF = $7,109** (no $24,000!)
-
-### 🔢 Incremento Ficto del 6%
-
-Si tu salario > 10 BPC (~$65,760):
-- Se suma 6% **solo para calcular el IRPF**
-- Tu salario real no cambia
-- Ejemplo: $85,000 → se usa $90,100 para calcular impuesto
-
-### 💳 Deducciones IRPF
-
-Reducen el impuesto a pagar:
-- **Hijos a cargo:** ~$3,288 por hijo (~0.5 BPC)
-- **Cónyuge a cargo:** ~$3,288 (~0.5 BPC)
-- **Gastos médicos, educativos, etc.**
-
-### 📏 BPC (Base de Prestaciones y Contribuciones)
-
-- **2025:** $6,576
-- Unidad de medida que se actualiza anualmente
-- Todas las franjas se definen en BPC para ajustarse con inflación
-- **Incremento 2024→2025:** 6.5% (+$399)
-
 ## 🔧 Instalación Local
 
 Si quieres ejecutar la API en tu computadora:
@@ -347,18 +284,6 @@ python main.py
 - Calculadoras internas para empleados
 - Sistemas de simulación salarial
 
-## 📊 Comparación con Simuladores Oficiales
-
-| Característica       | Esta API     | BPS Oficial  | DGI Oficial  |
-| -------------------- | ------------ | ------------ | ------------ |
-| **FONASA variable**  | ✅ Correcto   | ❌ Incorrecto | ❌ No incluye |
-| **Franjas IRPF**     | ✅ Todas      | ❌ Limitado   | ✅ Correcto   |
-| **Incremento ficto** | ✅ Automático | ❌ Manual     | ✅ Incluido   |
-| **Deducciones**      | ✅ Completas  | ❌ Básicas    | ✅ Completas  |
-| **API REST**         | ✅ Sí         | ❌ No         | ❌ No         |
-| **Actualización**    | ✅ Rápida     | 🟡 Lenta      | 🟡 Lenta      |
-| **Documentación**    | ✅ Completa   | ❌ Básica     | ❌ Técnica    |
-
 ## 📞 Soporte y Errores
 
 Si encuentras errores en los cálculos o tienes sugerencias:
@@ -388,6 +313,73 @@ Si encuentras errores en los cálculos o tienes sugerencias:
 - **$50,000:** Salario líquido similar (franjas bajas)
 - **$80,000:** Leve reducción IRPF (umbral más alto)
 - **$120,000+:** Mayor ahorro por deducciones incrementadas
+
+---
+
+## 💡 Conceptos Importantes
+
+### 🏛️ Aportes BPS (Obligatorios)
+
+#### 1. Aporte Jubilatorio (15%)
+- Tu "ahorro forzoso" para la jubilación
+- Va a tu cuenta individual en BPS
+- **No se pierde** - es tu dinero para el futuro
+
+#### 2. FONASA (3% - 4.5%)
+- Financia el sistema de salud público
+- Tasa variable según salario y cargas familiares:
+  - **< 2.5 BPC con familia:** 3%
+  - **≥ 2.5 BPC:** 4.5%
+
+#### 3. FRL (0.1%)
+- Fondo de Reconversión Laboral
+- Financia programas de capacitación para desempleados
+
+### 📊 IRPF - Sistema Progresivo (¡Importante!)
+
+**❌ Error común:** "Si gano $100,000 y caigo en la franja del 24%, pago 24% sobre todo mi salario"
+
+**✅ Realidad:** El IRPF es progresivo - cada franja tiene su tasa:
+
+| Desde    | Hasta   | Tasa | En Pesos (2025)     |
+| -------- | ------- | ---- | ------------------- |
+| 0 BPC    | 7 BPC   | 0%   | $0 - $46,032        |
+| 7 BPC    | 10 BPC  | 10%  | $46,032 - $65,760   |
+| 10 BPC   | 15 BPC  | 15%  | $65,760 - $98,640   |
+| 15 BPC   | 30 BPC  | 24%  | $98,640 - $197,280  |
+| 30 BPC   | 50 BPC  | 25%  | $197,280 - $328,800 |
+| 50 BPC   | 75 BPC  | 27%  | $328,800 - $493,200 |
+| 75 BPC   | 115 BPC | 31%  | $493,200 - $756,240 |
+| 115+ BPC | ∞       | 36%  | $756,240+           |
+
+**Ejemplo:** Con $100,000 de salario (2025):
+- 0% sobre primeros $46,032 = $0
+- 10% sobre siguientes $19,728 = $1,973
+- 15% sobre los $34,240 restantes = $5,136
+- **Total IRPF = $7,109** (no $24,000!)
+
+### 🔢 Incremento Ficto del 6%
+
+Si tu salario > 10 BPC (~$65,760):
+- Se suma 6% **solo para calcular el IRPF**
+- Tu salario real no cambia
+- Ejemplo: $85,000 → se usa $90,100 para calcular impuesto
+
+### 💳 Deducciones IRPF
+
+Reducen el impuesto a pagar:
+- **Hijos a cargo:** ~$3,288 por hijo (~0.5 BPC)
+- **Cónyuge a cargo:** ~$3,288 (~0.5 BPC)
+- **Gastos médicos, educativos, etc.**
+
+### 📏 BPC (Base de Prestaciones y Contribuciones)
+
+- **2025:** $6,576
+- Unidad de medida que se actualiza anualmente
+- Todas las franjas se definen en BPC para ajustarse con inflación
+- **Incremento 2024→2025:** 6.5% (+$399)
+
+---
 
 ## 📄 Licencia
 
